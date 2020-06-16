@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.dao.GradeDao">
+
+
+<resultMap id="allGrade" type="Grade">
+    <id property="gId" column="stugraid"></id>
+    <collection property="students" ofType="Student">
+        <id column="stuid" property="stuId"></id>
+    </collection>
+</resultMap>
+
+<select id="getAllGrade"  resultMap="allGrade">
+    select * from stu,grade where stu.stugraid =grade.gid
+</select>
+</mapper>

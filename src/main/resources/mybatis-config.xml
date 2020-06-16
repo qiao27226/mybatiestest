@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+<!--    添加properties配置文件路径（外部配置、动态替换）-->
+    <properties resource="jdbc.properties"/>
+    <settings>
+        <setting name="autoMappingBehavior" value="FULL"/>
+    </settings>
+    <!--定义别名二选一-->
+    <typeAliases>
+        <!--1.定义类的别名-->
+        <!-- <typeAlias type="com.qf.mybatis.part1.basic.User" alias="user" />-->
+
+        <!--2.自动扫描包，将原类名作为别名-->
+        <package name="com.qf.entity" />
+    </typeAliases>
+
+
+    <!-- jdbc环境配置，选中默认环境-->
+    <environments default="pro">
+        <environment id="pro">
+            <!-- mysql数据库环境配置-->
+            <transactionManager type="jdbc"></transactionManager>
+            <dataSource type="POOLED">
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+                <property name="driver" value="${jdbc.driverClassName}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+    <!--  注册 mapper文件-->
+        <mapper resource="com/qf/dao/impl/stuDaoMapper.xml"></mapper>
+        <mapper resource="com/qf/dao/impl/IUserDaoMapper.xml"></mapper>
+        <mapper resource="com/qf/dao/impl/GradeDaoMapper.xml"></mapper>
+    </mappers>
+</configuration>

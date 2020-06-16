@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.dao.StuDao">
+    <resultMap id="stugrade" type="Student">
+        <id property="stuId" column="stuid"></id>
+        <association property="grade" javaType="Grade">
+            <id column="stuGraid" property="gId"></id>
+        </association>
+    </resultMap>
+    <select id="getAllStu" resultMap="stugrade">
+        select * from stu
+    </select>
+    <select id="getStuById" resultType="Student">
+
+        select * from stu where stuid = #{id};
+    </select>
+
+    <select id="getStuByName" resultType="Student">
+        select * from stu where stuname like concat('%',#{name},'%');
+    </select>
+    
+    <insert id="insertStuByall" parameterType="Student" >
+        <selectKey keyProperty="stuId" resultType="int" order="AFTER">
+            select last_insert_id()
+        </selectKey>
+        insert into stu values (null , #{stuName}, #{stuBir}, #{stuAge}, #{stuHobby}, #{stuGraid}, #{psw} )
+    </insert>
+    <update id="delStuById" >
+        delete from stu where stuid = #{id}
+    </update>
+    
+    <update id="modifyPwd" >
+        update stu set psw = #{pwd} where stuid = #{id}
+    </update>
+    <select id="getStuByPage" resultType="Student">
+        select * from stu limit #{begin}, #{end};
+    </select>
+</mapper>
